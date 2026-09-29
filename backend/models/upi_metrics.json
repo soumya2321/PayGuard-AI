@@ -1,0 +1,27 @@
+{
+  "model_name": "XGBoost UPI Fraud Classifier",
+  "algorithm": "Extreme Gradient Boosting",
+  "features": [
+    "amount",
+    "amount_deviation",
+    "hour",
+    "transaction_velocity",
+    "is_new_device",
+    "is_new_location",
+    "receiver_risk_score"
+  ],
+  "accuracy": 0.7732,
+  "precision": 0.2309,
+  "recall": 0.5464,
+  "f1_score": 0.3246,
+  "roc_auc": 0.7276,
+  "pr_auc": 0.3104,
+  "confusion_matrix": {
+    "true_negatives": 2875,
+    "false_positives": 726,
+    "false_negatives": 181,
+    "true_positives": 218
+  },
+  "test_sample_count": 4000,
+  "training_sample_count": 16000
+}

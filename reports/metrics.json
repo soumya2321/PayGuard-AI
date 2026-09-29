@@ -1,0 +1,17 @@
+{
+  "accuracy": 0.9729,
+  "precision": 0.9083,
+  "recall": 0.9373,
+  "f1_score": 0.9226,
+  "true_negatives": 4284,
+  "false_positives": 86,
+  "false_negatives": 57,
+  "true_positives": 852,
+  "total_samples": 5279,
+  "actual_fraud_count": 909,
+  "predicted_fraud_count": 938,
+  "false_positive_rate": 0.0197,
+  "false_negative_rate": 0.0627,
+  "roc_auc": 0.9965,
+  "average_precision": 0.9862
+}

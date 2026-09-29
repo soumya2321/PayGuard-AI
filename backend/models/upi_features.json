@@ -1,0 +1,9 @@
+[
+  "amount",
+  "amount_deviation",
+  "hour",
+  "transaction_velocity",
+  "is_new_device",
+  "is_new_location",
+  "receiver_risk_score"
+]

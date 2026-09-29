@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UPI Fraud Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <span class="logo">🔒 UPI Fraud Detector</span>
+      <p class="tagline">Enter transaction details to check for fraud</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Result Banner ──────────────────────────────── -->
+    {% if result %}
+    <div class="result-banner {{ 'fraud' if result.prediction == 1 else 'legit' }}">
+      <span class="result-icon">{{ '⚠️' if result.prediction == 1 else '✅' }}</span>
+      <div>
+        <h2>{{ result.label }}</h2>
+        <p>Fraud probability: <strong>{{ "%.2f"|format(result.fraud_probability * 100) }}%</strong></p>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="result-banner error">
+      <span class="result-icon">❌</span>
+      <div><h2>Error</h2><p>{{ error }}</p></div>
+    </div>
+    {% endif %}
+
+    <!-- ── Input Form ─────────────────────────────────── -->
+    <section class="card">
+      <h3>Transaction Details</h3>
+      <form action="/predict" method="POST" class="feature-form">
+        <div class="grid">
+          {% for feature in features %}
+          <div class="field">
+            <label for="{{ feature }}">{{ feature.replace('_', ' ').title() }}</label>
+            <input
+              type="number"
+              step="any"
+              id="{{ feature }}"
+              name="{{ feature }}"
+              placeholder="0.0"
+              value="{{ input_data[feature] if input_data and feature in input_data else '' }}"
+              aria-label="{{ feature.replace('_', ' ').title() }}"
+            />
+          </div>
+          {% endfor %}
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn-primary">Analyze Transaction</button>
+          <button type="reset" class="btn-secondary">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ── API Reference ──────────────────────────────── -->
+    <section class="card api-card">
+      <h3>API Reference</h3>
+      <p>Send a <code>POST</code> request to <code>/api/predict</code> with JSON:</p>
+      <pre><code>{
+  "amount": -0.23,
+  "session_duration": -1.09,
+  "receiver_transaction_history": -0.83,
+  ...
+}</code></pre>
+      <p>Response:</p>
+      <pre><code>{
+  "predictions": [1],
+  "probabilities": [0.87]
+}</code></pre>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>UPI Fraud Detection System &mdash; ML-powered transaction analysis</p>
+  </footer>
+
+</body>
+</html>
