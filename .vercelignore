@@ -1,0 +1,28 @@
+# .vercelignore - Exclude heavy local folders from Vercel function bundle
+
+# Local Virtual Environment (694 MB - NEVER upload to cloud!)
+venv/
+.venv/
+env/
+ENV/
+
+# Large Datasets & Training CSVs (30+ MB)
+data/
+*.csv
+X_train.csv
+X_test.csv
+y_train.csv
+y_test.csv
+
+# Jupyter Notebooks & Reports
+notebooks/
+reports/
+
+# Dependencies & Build artifacts
+node_modules/
+frontend/node_modules/
+__pycache__/
+*.py[cod]
+.git/
+.vscode/
+.idea/

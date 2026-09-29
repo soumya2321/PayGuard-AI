@@ -28,8 +28,9 @@ venv.bak/
 
 # Local databases
 *.db
+*.db-*
 *.sqlite3
-data/upi_fraud.db
+data/
 
 # Environments & secrets
 .env
