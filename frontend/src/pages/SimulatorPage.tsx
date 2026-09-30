@@ -316,17 +316,40 @@ export const SimulatorPage: React.FC = () => {
     setLoading(true);
     setError(null);
 
-    // If simulating problem statement, ensure geographic & amount deviation are set
+    // Dynamically calculate telemetry features based on live form inputs
     const adjustedFeatures = { ...features };
-    if (isAnomalousLocation && adjustedFeatures.geographic_disparity === 0.0) {
-      adjustedFeatures.geographic_disparity = 2.8;
-      adjustedFeatures.geographic_location_vs_ip = 2.4;
+    if (isAnomalousLocation) {
+      adjustedFeatures.geographic_disparity = 3.5;
+      adjustedFeatures.geographic_location_vs_ip = 3.0;
+    } else if (features.geographic_disparity === 0 || features.geographic_disparity === 3.5) {
+      adjustedFeatures.geographic_disparity = 0.0;
+      adjustedFeatures.geographic_location_vs_ip = 0.0;
     }
-    if (isAnomalousDevice && adjustedFeatures.user_id_freq === 0.0) {
-      adjustedFeatures.user_id_freq = 3.5;
+
+    if (isAnomalousDevice) {
+      adjustedFeatures.user_id_freq = 4.0;
+      adjustedFeatures.background_data_usage = 3.0;
+    } else if (features.user_id_freq === 0 || features.user_id_freq === 4.0) {
+      adjustedFeatures.user_id_freq = 0.0;
+      adjustedFeatures.background_data_usage = 0.0;
     }
-    if (isAnomalousAmount && adjustedFeatures.transaction_amount_vs_sender_history === 0.0) {
-      adjustedFeatures.transaction_amount_vs_sender_history = 12.0;
+
+    if (isOffPeakHour) {
+      adjustedFeatures.transaction_time_of_day = 2.8;
+    } else if (features.transaction_time_of_day === 0 || features.transaction_time_of_day === 2.8) {
+      adjustedFeatures.transaction_time_of_day = 0.0;
+    }
+
+    if (isAnomalousAmount) {
+      adjustedFeatures.amount = Math.min(8.0, Number(((amountInr - 650) / 5000).toFixed(2)));
+      adjustedFeatures.transaction_amount_vs_sender_history = Math.min(25.0, Number((amountInr / 650).toFixed(1)));
+    } else {
+      adjustedFeatures.amount = Number(((amountInr - 650) / 1000).toFixed(2));
+      adjustedFeatures.transaction_amount_vs_sender_history = Number((amountInr / 650).toFixed(1));
+    }
+
+    if (receiverUpi.toLowerCase().includes('lottery') || receiverUpi.toLowerCase().includes('fake')) {
+      adjustedFeatures.receiver_transaction_history = -2.8;
     }
 
     try {
@@ -486,12 +509,16 @@ export const SimulatorPage: React.FC = () => {
 
                 {/* Amount Deviation Alert Banner */}
                 {isAnomalousAmount && (
-                  <div className="mt-2.5 p-2.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-center space-x-2 text-xs text-rose-700">
-                    <AlertTriangle className="w-4 h-4 text-rose-500 shrink-0" />
-                    <span>
-                      <strong>High Amount Anomaly: </strong> ₹{amountInr.toLocaleString('en-IN')} is{' '}
-                      <strong>{(amountInr / 650).toFixed(1)}x</strong> above Rahul's normal average (₹650).
-                    </span>
+                  <div className="mt-2.5 p-3 rounded-2xl bg-amber-50/90 border border-amber-200 text-xs text-amber-900 space-y-1.5">
+                    <div className="flex items-center space-x-2 font-bold text-amber-800">
+                      <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                      <span>
+                        High Value Transaction: ₹{amountInr.toLocaleString('en-IN')} ({(amountInr / 650).toFixed(1)}x above ₹650 baseline)
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-600 leading-relaxed pl-6">
+                      <strong className="text-slate-800">💡 Why this is Low Risk on its own:</strong> If transferred from Rahul's home (Bengaluru) on his recognized Samsung phone during daytime, the AI approves it to avoid false positives. To simulate an attack resulting in <strong>99.9% High Risk</strong>, change location to <strong>Kolkata</strong>, device to <strong>New Device</strong>, and time to <strong>03:15 AM</strong> (or click the Preset card above).
+                    </p>
                   </div>
                 )}
               </div>
