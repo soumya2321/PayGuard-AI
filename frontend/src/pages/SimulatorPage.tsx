@@ -84,8 +84,8 @@ interface PresetScenario {
 const PRESET_SCENARIOS: PresetScenario[] = [
   {
     id: 'problem_statement_case',
-    name: '🎯 Major Project Problem Statement: ₹45,000 Multi-Vector Anomaly',
-    badge: 'Problem Statement (High Risk)',
+    name: '🎯 Suspicious Account Takeover: ₹45,000 Multi-Vector Anomaly',
+    badge: 'Critical High Risk Attack',
     badgeColor: 'text-rose-700 bg-rose-100/80 border-rose-300',
     description: 'Rahul Sharma transfers ₹45,000 (69x baseline) from Kolkata at 03:15 AM on an unrecognized iPhone 15 Pro to unverified VPA.',
     sender_upi_id: 'rahul.sharma@oksbi',
@@ -543,7 +543,7 @@ export const SimulatorPage: React.FC = () => {
                   >
                     <option value="" disabled>Select Preset City...</option>
                     <option value="Bengaluru, Karnataka">Bengaluru, Karnataka (Baseline)</option>
-                    <option value="Kolkata, West Bengal">Kolkata, West Bengal (Problem Statement)</option>
+                    <option value="Kolkata, West Bengal">Kolkata, West Bengal (Unusual Distance)</option>
                     <option value="Mumbai, Maharashtra">Mumbai, Maharashtra</option>
                     <option value="New Delhi, Delhi NCR">New Delhi, Delhi NCR</option>
                     <option value="Hyderabad, Telangana">Hyderabad, Telangana</option>
@@ -909,7 +909,7 @@ export const SimulatorPage: React.FC = () => {
               </div>
               <h4 className="text-sm font-bold text-slate-900">No Simulation Run Yet</h4>
               <p className="text-xs text-slate-500 max-w-xs leading-relaxed">
-                Click the <strong className="text-rose-600">Major Project Problem Statement</strong> preset above or use the Location Detector, then click Simulate.
+                Click the <strong className="text-rose-600">Suspicious Account Takeover</strong> preset above or use the Location Detector, then click Simulate.
               </p>
             </div>
           )}

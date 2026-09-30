@@ -54,7 +54,7 @@ export const MainLayout: React.FC = () => {
           <div className="flex items-center space-x-2 truncate">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
             <span className="truncate">
-              <strong className="text-white font-semibold">PAYGUARD AI:</strong> Autonomous Multi-Vector UPI Fraud Risk Detection System (Phase 1 Evaluation)
+              <strong className="text-white font-semibold">PAYGUARD AI:</strong> Autonomous Multi-Vector UPI Fraud Risk Surveillance Engine
             </span>
           </div>
           <div className="hidden sm:flex items-center space-x-3 text-[11px] font-mono">
